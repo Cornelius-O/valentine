@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MOMO 💗💗</title>
+
+  <style>
+    /* ========================================
+       CSS VARIABLES
+       ======================================== */
+    :root {
+      --pink: #ff4d8d;
+      --pink-light: #ff7ab0;
+      --ink: #1f1723;
+      --muted: rgba(31, 23, 35, 0.65);
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.14);
+      --radius: 26px;
+      --accent: #b30045;
+    }
+
+    /* ========================================
+       GLOBAL RESET
+       ======================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ========================================
+       BODY & LAYOUT
+       ======================================== */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+
+      background:
+        radial-gradient(900px 700px at 15% 15%, #ffe3ee, transparent 60%),
+        radial-gradient(900px 700px at 90% 10%, #ffffff, transparent 55%),
+        radial-gradient(900px 700px at 80% 95%, #ffeef6, transparent 55%),
+        linear-gradient(160deg, #fff6fb, #ffffff);
+    }
+
+    /* ========================================
+       FLOATING HEARTS ANIMATION
+       ======================================== */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 10px 20px rgba(255, 77, 141, 0.10));
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translate(-50%, 30px) scale(0.95);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(-50%, -120vh) scale(1.05);
+        opacity: 0;
+      }
+    }
+
+    /* ========================================
+       SPARKLES ANIMATION
+       ======================================== */
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 77, 141, 0.45);
+      box-shadow: 0 0 0 6px rgba(255, 77, 141, 0.08);
+      animation: twinkle 2.2s ease-in-out infinite;
+      opacity: 0.75;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.35;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.85;
+      }
+    }
+
+    /* ========================================
+       CARD COMPONENTS
+       ======================================== */
+    .card,
+    .screen {
+      width: min(760px, 92vw);
+      margin: 0 0 28px;
+      padding: 30px 24px;
+
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      position: relative;
+      z-index: 10;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+
+      border-radius: 999px;
+      background: rgba(255, 77, 141, 0.12);
+      border: 1px solid rgba(255, 77, 141, 0.22);
+
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 4.6vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .name {
+      color: var(--accent);
+      font-weight: 900;
+      text-decoration: underline;
+      text-decoration-thickness: 4px;
+      text-underline-offset: 6px;
+      text-decoration-color: rgba(255, 77, 141, 0.45);
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    #questionText {
+        font-size: clamp(28px, 4vw, 40px);
+        font-weight: 900;
+        color: var(--ink);
+        text-align: center;
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(31, 23, 35, 0.55);
+    }
+
+    /* ========================================
+       FORM INPUTS
+       ======================================== */
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      flex: 1;
+      min-width: 180px;
+      padding: 14px;
+
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+
+      font-size: 16px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus {
+      border-color: rgba(255, 77, 141, 0.55);
+      box-shadow: 0 0 0 6px rgba(255, 77, 141, 0.10);
+    }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      position: relative;
+      min-height: 58px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+
+      transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.14s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(180deg, var(--pink-light), var(--pink));
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(255, 77, 141, 0.28);
+    }
+
+    #yesBtn:hover {
+      transform: translateY(-1px);
+    }
+
+    #yesBtn:active {
+      transform: translateY(0);
+    }
+
+    #yesBtn.pop {
+      animation: yesPop 0.28s ease;
+    }
+
+    @keyframes yesPop {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-2px) scale(1.03);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    #noBtn {
+      background: rgba(25, 25, 25, 0.90);
+      color: #fff;
+      opacity: 0.88;
+      position: relative;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+      transition: opacity 0.2s ease;
+    }
+
+    #noBtn:hover {
+      opacity: 1;
+    }
+
+    /* ========================================
+       ACCESS GATE
+       ======================================== */
+    .accessMsg {
+      margin-top: 18px;
+      display: none;
+      text-align: center;
+
+      font-weight: 1000;
+      font-size: clamp(34px, 6vw, 64px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+
+      color: var(--accent);
+      text-shadow: 0 18px 40px rgba(255, 77, 141, 0.25);
+
+      animation: accessBoom 0.55s ease both;
+    }
+
+    @keyframes accessBoom {
+      0% {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.06);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .shake {
+      animation: shake 0.25s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* ========================================
+       MEDIA VIEWER (PHOTO/VIDEO)
+       ======================================== */
+    .mediaWrap {
+      width: min(420px, 100%);
+      margin: 12px auto 10px;
+
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(0, 0, 0, 0.04);
+
+      aspect-ratio: var(--ar, 9 / 16);
+      max-height: 70vh;
+      min-height: 360px;
+
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    @media (min-width: 900px) {
+      .mediaWrap {
+        width: min(460px, 100%);
+        max-height: 72vh;
+      }
+    }
+
+    .mediaBg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(18px);
+      -webkit-filter: blur(18px);
+      transform: scale(1.08);
+      opacity: 0.35;
+    }
+
+    .media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .fsBtn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 2;
+
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      color: white;
+      font-weight: 900;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .fsBtn:active {
+      transform: translateY(1px);
+    }
+
+    :fullscreen .mediaWrap,
+    :-webkit-full-screen .mediaWrap {
+      border-radius: 0;
+      max-height: 100vh;
+      height: 100vh;
+    }
+
+    /* ========================================
+       MODAL
+       ======================================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      padding: 16px;
+      z-index: 100;
+
+      display: grid;
+      place-items: center;
+
+      background: rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+
+    .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modalCard {
+      width: min(560px, 92vw);
+      padding: 22px;
+
+      background: white;
+      border-radius: 26px;
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.22);
+
+      position: relative;
+      text-align: left;
+
+      transform: translateY(10px) scale(0.98);
+      transition: transform 0.18s ease;
+    }
+
+    .modal.open .modalCard {
+      transform: translateY(0) scale(1);
+    }
+
+    .modalCard h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .modalCard p {
+      margin: 0 0 14px;
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      background: rgba(0, 0, 0, 0.04);
+
+      cursor: pointer;
+      font-weight: 900;
+      transition: background 0.2s ease;
+    }
+
+    .close:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ========================================
+       CONFETTI
+       ======================================== */
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 50;
+    }
+
+    .confettiPiece {
+      position: absolute;
+      width: 10px;
+      height: 14px;
+      opacity: 0.9;
+      transform: translateY(-20px);
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(680deg);
+        opacity: 1;
+      }
+    }
+
+    /* ========================================
+       UTILITY CLASSES
+       ======================================== */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background animations -->
+  <div class="hearts" id="hearts"></div>
+  <div class="sparkles" id="sparkles"></div>
+
+  <!-- ========================================
+       SCREEN 1: ACCESS GATE
+       ======================================== -->
+  <section class="screen" id="gateScreen">
+    <div class="badge">2 Valentine Wood rd </div>
+    <h1>Access required</h1>
+    <p>Enter the code to continue.</p>
+
+    <div class="row">
+      <input
+        id="codeInput"
+        type="text"
+        inputmode="numeric"
+        placeholder="Enter code"
+        aria-label="Access code"
+        autocomplete="off"
+      />
+      <button id="unlockBtn">Unlock</button>
+    </div>
+
+    <div class="hint">Please Call Mr Feranmi to give you the code</div>
+    <div class="accessMsg" id="accessMsg">ACCESSSSSS</div>
+  </section>
+
+  <!-- ========================================
+       SCREEN 2: MAIN QUESTION
+       ======================================== -->
+  <main class="card hidden" id="mainScreen">
+    <div class="badge">Quick question</div>
+
+    <h1>Hii <span class="name"> Moriola Fikayomi</span>…</h1>
+    <p> Thanks for all the memories so far.</p>
+
+    <div class="mediaWrap" id="mediaWrap">
+      <div class="mediaBg" id="mediaBg"></div>
+      <img
+        id="photoEl"
+        class="media"
+        src="us1.jpg"
+        alt="Us together"
+      />
+      <button
+        class="fsBtn"
+        id="fsBtn"
+        type="button"
+        title="Fullscreen"
+        aria-label="Toggle fullscreen"
+      >⤢</button>
+    </div>
+
+    <p id="questionText">Will you be my Valentine?</p>
+
+    <div class="buttons" id="btnArea">
+      <button id="yesBtn" type="button">Yes</button>
+      <button id="noBtn" type="button">No</button>
+    </div>
+
+    <div class="hint">Don't be shy and better click yes o.</div>
+  </main>
+
+  <!-- ========================================
+       YES MODAL
+       ======================================== -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modalCard" role="dialog" aria-modal="true">
+      <button
+        class="close"
+        id="closeBtn"
+        type="button"
+        aria-label="Close"
+      >✕</button>
+
+      <h2>Yessss ❤️ See you soon my love!</h2>
+      <p>Can't wait to make more memories.</p>
+    </div>
+  </div>
+
+  <!-- Confetti container -->
+  <div class="confetti" id="confetti"></div>
+
+  <!-- Background music -->
+  <audio id="bgMusic" loop>
+    <source src="Cross My Mind.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    'use strict';
+
+    // ========================================
+    // CONFIGURATION
+    // ========================================
+    const CONFIG = {
+      accessCode: "2026",
+      heartEmojis: ["💗", "💖", "💞", "💕", "💘", "💝"],
+      noBtnTexts: {
+        3: "Be serious 😅",
+        6: "Try again 😭",
+        9: "Okay okay…"
+      }
+    };
+
+    // ========================================
+    // DOM ELEMENTS
+    // ========================================
+
+
+    const elements = {
+      // Gate screen
+      gateScreen: document.getElementById("gateScreen"),
+      mainScreen: document.getElementById("mainScreen"),
+      codeInput: document.getElementById("codeInput"),
+      unlockBtn: document.getElementById("unlockBtn"),
+      accessMsg: document.getElementById("accessMsg"),
+
+      // Media viewer
+      mediaWrap: document.getElementById("mediaWrap"),
+      mediaBg: document.getElementById("mediaBg"),
+      photoEl: document.getElementById("photoEl"),
+      fsBtn: document.getElementById("fsBtn"),
+
+      // Buttons
+      yesBtn: document.getElementById("yesBtn"),
+      noBtn: document.getElementById("noBtn"),
+      btnArea: document.getElementById("btnArea"),
+
+      // Modal
+      modal: document.getElementById("modal"),
+      closeBtn: document.getElementById("closeBtn"),
+
+      // Effects
+      hearts: document.getElementById("hearts"),
+      sparkles: document.getElementById("sparkles"),
+      confetti: document.getElementById("confetti"),
+      bgMusic: document.getElementById("bgMusic")
+    };
+
+    // ========================================
+    // STATE
+    // ========================================
+    let noClickCount = 0;
+    let musicStarted = false;
+
+    // ========================================
+    // AUDIO MANAGEMENT
+    // ========================================
+    function initAudio() {
+      if (elements.bgMusic && !musicStarted) {
+        elements.bgMusic.volume = 0.6;
+        elements.bgMusic.play().catch(() => {
+          console.log('Audio autoplay blocked - will play on user interaction');
+        });
+        musicStarted = true;
+      }
+    }
+
+    elements.bgMusic.addEventListener("ended", () => {
+  elements.bgMusic.currentTime = 0;
+  elements.bgMusic.play();
+});
+
+
+    // Try to start audio on any user interaction
+    function handleFirstInteraction() {
+      initAudio();
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+    }
+
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
+
+    // ========================================
+    // FLOATING HEARTS
+    // ========================================
+    function createFloatingHearts() {
+      const { heartEmojis } = CONFIG;
+      const fragment = document.createDocumentFragment();
+
+      for (let i = 0; i < 22; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+        // Random positioning and animation
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.top = `${70 + Math.random() * 40}vh`;
+        heart.style.animationDuration = `${10 + Math.random() * 10}s`;
+        heart.style.animationDelay = `${-Math.random() * 10}s`;
+        heart.style.fontSize = `${14 + Math.random() * 22}px`;
+
+        fragment.appendChild(heart);
+      }
+
+      elements.hearts.appendChild(fragment);
+    }
+
+    // ========================================
+    // SPARKLES
+    // ========================================
+    function createSparkles() {
+      const fragment = document.createDocumentFragment();
+
+      for (let i = 0; i < 18; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+
+        // Random positioning and animation
+        sparkle.style.left = `${Math.random() * 100}vw`;
+        sparkle.style.top = `${Math.random() * 100}vh`;
+        sparkle.style.animationDelay = `${Math.random() * 2.2}s`;
+        sparkle.style.animationDuration = `${1.8 + Math.random() * 1.8}s`;
+
+        fragment.appendChild(sparkle);
+      }
+
+      elements.sparkles.appendChild(fragment);
+    }
+
+    // ========================================
+    // ACCESS GATE
+    // ========================================
+    function grantAccess() {
+      elements.accessMsg.style.display = "block";
+      initAudio();
+
+      setTimeout(() => {
+        elements.gateScreen.classList.add("hidden");
+        elements.mainScreen.classList.remove("hidden");
+        adjustPhotoAspectRatio();
+      }, 900);
+    }
+
+    function denyAccess() {
+      elements.accessMsg.style.display = "none";
+
+      // Trigger shake animation
+      elements.gateScreen.classList.remove("shake");
+      void elements.gateScreen.offsetWidth; // Force reflow
+      elements.gateScreen.classList.add("shake");
+
+      // Reset input
+      elements.codeInput.value = "";
+      elements.codeInput.focus();
+    }
+
+    function checkAccessCode() {
+      const enteredCode = (elements.codeInput.value || "").trim();
+      if (enteredCode === CONFIG.accessCode) {
+        grantAccess();
+      } else {
+        denyAccess();
+      }
+    }
+
+    // Event listeners for access gate
+    elements.unlockBtn.addEventListener("click", checkAccessCode);
+    elements.codeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        checkAccessCode();
+      }
+    });
+
+    // ========================================
+    // PHOTO VIEWER
+    // ========================================
+    function setAspectRatio(width, height) {
+      if (!width || !height) return;
+
+      const ratio = width / height;
+      const clampedRatio = Math.min(2.0, Math.max(0.35, ratio));
+
+      elements.mediaWrap.style.setProperty("--ar", `${clampedRatio} / 1`);
+    }
+
+    function adjustPhotoAspectRatio() {
+      // Set blurred background
+      elements.mediaBg.style.backgroundImage = `url('${elements.photoEl.src}')`;
+
+      // Load image to get natural dimensions
+      const probe = new Image();
+      probe.onload = () => {
+        setAspectRatio(probe.naturalWidth, probe.naturalHeight);
+      };
+      probe.onerror = () => {
+        console.warn('Could not load image for aspect ratio calculation');
+      };
+      probe.src = elements.photoEl.src;
+    }
+
+    // Initialize photo viewer once loaded
+    if (elements.photoEl.complete) {
+      adjustPhotoAspectRatio();
+    } else {
+      elements.photoEl.addEventListener("load", adjustPhotoAspectRatio);
+    }
+
+    // ========================================
+    // FULLSCREEN TOGGLE (Cross-browser)
+    // ========================================
+    function isFullscreen() {
+      return !!(
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+    }
+
+    async function requestFullscreen(element) {
+      try {
+        if (element.requestFullscreen) {
+          await element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+          await element.webkitRequestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+          await element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          await element.msRequestFullscreen();
+        }
+        return true;
+      } catch (error) {
+        console.error('Fullscreen request failed:', error);
+        return false;
+      }
+    }
+
+    async function exitFullscreen() {
+      try {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          await document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          await document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          await document.msExitFullscreen();
+        }
+        return true;
+      } catch (error) {
+        console.error('Exit fullscreen failed:', error);
+        return false;
+      }
+    }
+
+    async function toggleFullscreen() {
+      if (!isFullscreen()) {
+        const success = await requestFullscreen(elements.mediaWrap);
+        if (success) {
+          elements.fsBtn.textContent = "⤡";
+        } else {
+          alert("Fullscreen isn't supported on this browser. Try a different browser.");
+        }
+      } else {
+        await exitFullscreen();
+        elements.fsBtn.textContent = "⤢";
+      }
+    }
+
+    elements.fsBtn.addEventListener("click", toggleFullscreen);
+
+    // Listen for fullscreen changes (cross-browser)
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'msfullscreenchange'].forEach(event => {
+      document.addEventListener(event, () => {
+        elements.fsBtn.textContent = isFullscreen() ? "⤡" : "⤢";
+      });
+    });
+
+    // ========================================
+    // CONFETTI
+    // ========================================
+    function createConfetti() {
+      elements.confetti.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+
+      for (let i = 0; i < 120; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confettiPiece";
+
+        // Random positioning and animation
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.top = `${-20 - Math.random() * 80}px`;
+        piece.style.animationDuration = `${2.5 + Math.random() * 2.5}s`;
+
+        // Random color
+        const hue = Math.floor(Math.random() * 360);
+        piece.style.background = `hsl(${hue}, 90%, 60%)`;
+
+        fragment.appendChild(piece);
+      }
+
+      elements.confetti.appendChild(fragment);
+
+      // Clean up confetti after animation
+      setTimeout(() => {
+        elements.confetti.innerHTML = "";
+      }, 5200);
+    }
+
+    // ========================================
+    // MODAL
+    // ========================================
+    function openModal() {
+      elements.modal.classList.add("open");
+      elements.modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      elements.modal.classList.remove("open");
+      elements.modal.setAttribute("aria-hidden", "true");
+    }
+
+    // ========================================
+    // YES BUTTON
+    // ========================================
+    elements.yesBtn.addEventListener("click", () => {
+      // Trigger pop animation
+      elements.yesBtn.classList.remove("pop");
+      void elements.yesBtn.offsetWidth; // Force reflow
+      elements.yesBtn.classList.add("pop");
+
+      createConfetti();
+      openModal();
+    });
+
+    // ========================================
+    // MODAL CLOSE
+    // ========================================
+    elements.closeBtn.addEventListener("click", closeModal);
+
+    // Close modal when clicking backdrop
+    elements.modal.addEventListener("click", (e) => {
+      if (e.target === elements.modal) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && elements.modal.classList.contains("open")) {
+        closeModal();
+      }
+    });
+
+    // ========================================
+    // NO BUTTON DODGE
+    // ========================================
+    function moveNoButton() {
+      const areaRect = elements.btnArea.getBoundingClientRect();
+      const btnRect = elements.noBtn.getBoundingClientRect();
+
+      const maxX = Math.max(0, areaRect.width - btnRect.width - 12);
+      const maxY = Math.max(0, areaRect.height - btnRect.height - 12);
+
+      elements.noBtn.style.position = "absolute";
+      elements.noBtn.style.left = `${Math.random() * maxX}px`;
+      elements.noBtn.style.top = `${Math.random() * maxY}px`;
+    }
+
+    function handleNoDodge(e) {
+      e.preventDefault();
+      noClickCount++;
+      moveNoButton();
+
+      // Update button text based on click count
+      const { noBtnTexts } = CONFIG;
+      for (const [count, text] of Object.entries(noBtnTexts)) {
+        if (noClickCount === parseInt(count)) {
+          elements.noBtn.textContent = text;
+          break;
+        }
+      }
+    }
+
+    // Mouse events for desktop
+    elements.noBtn.addEventListener("mouseenter", handleNoDodge);
+    elements.noBtn.addEventListener("click", handleNoDodge);
+
+    // Touch events for mobile/touchscreen laptops
+    elements.noBtn.addEventListener("touchstart", handleNoDodge, { passive: false });
+
+    // ========================================
+    // INITIALIZE
+    // ========================================
+    function init() {
+      createFloatingHearts();
+      createSparkles();
+
+      // Focus on code input
+      elements.codeInput.focus();
+
+      console.log('Valentine page initialized successfully! 💝');
+    }
+
+    // Run initialization when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
